@@ -1,6 +1,4 @@
 *.pdf
-*.PNG
-*.PNG - Copy
 *.exe
 .DS_Store
 node_modules/
