@@ -5,20 +5,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hi Mart - Đi Chợ Đi Đỉnh</title>
-    <!-- Use Nunito font for friendly supermarket vibe -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ---- PRICING SECTION ---- */
+        .pricing-section { padding: 80px 20px; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+        @media (max-width: 900px) {
+            .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+            .pricing-card--featured { transform: none; }
+            .pricing-card--featured:hover { transform: translateY(-6px); }
+            .contact-wrapper { grid-template-columns: 1fr !important; }
+            .form-row { grid-template-columns: 1fr !important; }
+            .contact-section { padding: 40px 12px; }
+            .contact-form { padding: 24px 16px; }
+            .contact-info { padding: 24px 16px; }
+            .pricing-section { padding: 40px 12px; }
+        }
+        .pricing-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 36px 28px 32px;
+            border: 2px solid #e8f5e9;
+            position: relative;
+            text-align: center;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(56,152,35,0.13); }
+        .pricing-card--featured {
+            border-color: #389823;
+            background: linear-gradient(160deg, #f6fff3 0%, #fff 60%);
+            box-shadow: 0 8px 32px rgba(56,152,35,0.18);
+            transform: translateY(-8px) scale(1.02);
+        }
+        .pricing-card--featured:hover { transform: translateY(-14px) scale(1.02); }
+        .pricing-ribbon {
+            position: absolute; top: -1px; right: 20px;
+            background: #389823; color: #fff;
+            font-size: 11px; font-weight: 900; font-family: 'Nunito', sans-serif;
+            padding: 5px 14px; border-radius: 0 0 12px 12px; letter-spacing: 1px;
+        }
+        .pricing-badge {
+            display: inline-block; font-size: 11px; font-weight: 900;
+            font-family: 'Nunito', sans-serif; letter-spacing: 2px;
+            padding: 4px 14px; border-radius: 30px; margin-bottom: 14px;
+        }
+        .pricing-icon { font-size: 40px; margin-bottom: 12px; line-height: 1; }
+        .pricing-name { font-size: 20px; font-weight: 800; color: #754021; font-family: 'Nunito', sans-serif; margin: 0 0 10px; }
+        .pricing-price { margin: 12px 0 10px; }
+        .price-number { font-size: 32px; font-weight: 900; color: #2F7D1D; font-family: 'Nunito', sans-serif; }
+        .price-period { font-size: 14px; color: #888; font-weight: 600; margin-left: 2px; }
+        .pricing-desc { font-size: 13px; color: #777; line-height: 1.5; margin: 0 0 20px; min-height: 42px; }
+        .pricing-features {
+            list-style: none; padding: 0; margin: 0 0 28px;
+            text-align: left; border-top: 1px dashed #e0e0e0; padding-top: 18px;
+        }
+        .pricing-features li {
+            font-size: 14px; font-weight: 600; color: #333; padding: 6px 0;
+            display: flex; align-items: center; gap: 10px; font-family: 'Nunito', sans-serif;
+        }
+        .pricing-features li .fa-check { color: #389823; font-size: 13px; flex-shrink: 0; }
+        .pricing-features li .fa-xmark { color: #ccc; font-size: 13px; flex-shrink: 0; }
+        .pricing-features li.disabled { color: #bbb; }
+        .pricing-cta {
+            display: block; width: 100%; padding: 13px 0; border-radius: 50px;
+            font-size: 15px; font-weight: 900; font-family: 'Nunito', sans-serif;
+            text-align: center; text-decoration: none; letter-spacing: 0.5px;
+            transition: all 0.2s; cursor: pointer; box-sizing: border-box;
+        }
+        .pricing-cta--primary { background: #389823; color: #fff; border: 2px solid #389823; }
+        .pricing-cta--primary:hover { background: #2F7D1D; border-color: #2F7D1D; transform: scale(1.03); }
+        .pricing-cta--outline { background: transparent; color: #2F7D1D; border: 2px solid #389823; }
+        .pricing-cta--outline:hover { background: #f0fbf0; transform: scale(1.03); }
+        .pricing-compare-note {
+            margin-top: 32px; text-align: center; font-size: 13px;
+            color: #888; font-style: italic; font-family: 'Nunito', sans-serif;
+        }
+        .pricing-compare-note .fa-circle-info { color: #389823; margin-right: 6px; }
+
+        /* ---- CONTACT SECTION ---- */
+        .contact-section { background: linear-gradient(135deg, #2a6e13 0%, #1b4d0d 100%); padding: 80px 20px; color: #fff; }
+        .contact-section .section-title { color: #fff; }
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; align-items: start; }
+        .contact-info { padding: 32px; background: rgba(255,255,255,0.08); border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); }
+        .contact-info h4 { font-size: 18px; font-weight: 900; font-family: 'Nunito', sans-serif; color: #ffe082; margin: 0 0 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .contact-info-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+        .contact-info-icon { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 15px; color: #ffe082; flex-shrink: 0; }
+        .contact-info-item strong { display: block; font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.7); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .contact-info-item p { margin: 0; font-size: 15px; font-weight: 600; color: #fff; font-family: 'Nunito', sans-serif; }
+        .contact-hours { margin-top: 24px; padding: 12px 16px; background: rgba(255,224,130,0.15); border-radius: 12px; border: 1px solid rgba(255,224,130,0.3); font-size: 14px; color: #ffe082; font-weight: 600; font-family: 'Nunito', sans-serif; }
+        .contact-hours .fa-clock { margin-right: 6px; }
+        .contact-form { background: #fff; border-radius: 20px; padding: 36px 32px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 800; color: #444; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Nunito', sans-serif; }
+        .required { color: #e74c3c; }
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="email"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%; padding: 12px 16px; border: 2px solid #e8f5e9; border-radius: 12px;
+            font-size: 14px; font-family: 'Nunito', sans-serif; font-weight: 600; color: #333;
+            background: #fafafa; outline: none; transition: border-color 0.2s, background 0.2s;
+            box-sizing: border-box; appearance: none; -webkit-appearance: none;
+        }
+        .form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23389823' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; cursor: pointer;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #389823; background: #fff; box-shadow: 0 0 0 3px rgba(56,152,35,0.1);
+        }
+        .form-group textarea { resize: vertical; min-height: 110px; }
+        .form-checkbox { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
+        .form-checkbox input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: #389823; flex-shrink: 0; cursor: pointer; }
+        .form-checkbox label { font-size: 13px; font-weight: 600; color: #666; text-transform: none; letter-spacing: 0; margin-bottom: 0; cursor: pointer; line-height: 1.4; }
+        .form-submit-btn {
+            width: 100%; padding: 15px; background: #389823; color: #fff; border: none;
+            border-radius: 50px; font-size: 16px; font-weight: 900; font-family: 'Nunito', sans-serif;
+            letter-spacing: 0.5px; cursor: pointer; transition: background 0.2s, transform 0.15s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .form-submit-btn:hover { background: #2F7D1D; transform: scale(1.02); }
+        .form-submit-btn:active { transform: scale(0.98); }
+        .form-success-msg {
+            margin-top: 16px; padding: 14px 18px; background: #e8f5e9; border-radius: 12px;
+            color: #2F7D1D; font-size: 14px; font-weight: 700; font-family: 'Nunito', sans-serif;
+            display: flex; align-items: center; gap: 10px; border: 1px solid #a5d6a7;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Floating Buttons matched from design -->
+    <!-- Floating Buttons -->
     <div class="floating-bar">
         <a href="#" class="float-btn" title="Yêu thích"><i class="fa-solid fa-heart"></i></a>
         <a href="#" class="float-btn" title="Chat Zalo"><i class="fa-solid fa-comment-dots"></i></a>
-        <a href="#" class="float-btn" title="Quà Tặng"><i class="fa-solid fa-gift"></i></a>
+        <a href="#lien-he" class="float-btn" title="Liên hệ"><i class="fa-solid fa-gift"></i></a>
     </div>
 
     <!-- Top Bar -->
@@ -37,32 +168,18 @@
     <!-- Header -->
     <header>
         <div class="header-inner">
-            <!-- Custom logo matched from reference -->
             <a href="#" class="logo">
-                <img src="./images/logo.png"
-                    alt="Hi Mart Logo" style="height: 48px; margin-top: 5px; border-radius: 4px;">
+                <img src="images/7.PNG" alt="Hi Mart Logo" style="height: 48px; margin-top: 5px; border-radius: 4px;">
             </a>
+            <button class="mobile-menu-btn" onclick="document.querySelector('nav').classList.toggle('nav-open')" aria-label="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
             <nav>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-circle-info"></i>
-                    Về Hi Mart
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                    Sản phẩm
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-tags"></i>
-                    Ưu đãi
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-users"></i>
-                    Cộng đồng
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fa-solid fa-envelope"></i>
-                    Liên hệ
-                </a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-circle-info"></i>Về Hi Mart</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-basket-shopping"></i>Sản phẩm</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-tags"></i>Ưu đãi</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-users"></i>Cộng đồng</a>
+                <a href="#lien-he" class="nav-item"><i class="fa-solid fa-envelope"></i>Liên hệ</a>
             </nav>
         </div>
     </header>
@@ -77,11 +194,10 @@
                     Mua sắm an tâm, tiện lợi với mức giá bình dân ngay tại góc phố nhà bạn. Tại Hi Mart, chúng tôi cung
                     cấp đa dạng các mặt hàng thiết yếu cho mọi gia đình Việt.
                 </p>
-                <a href="#" class="hero-cta">📍 TÌM CỬA HÀNG GẦN BẠN NHẤT</a>
+                <a href="#lien-he" class="hero-cta">📍 TÌM CỬA HÀNG GẦN BẠN NHẤT</a>
             </div>
             <div class="hero-image">
-                <img src="./images/hero.png"
-                    alt="Hi Mart Hero">
+                <img src="images/6_-_Copy.PNG" alt="Hi Mart Hero">
             </div>
         </div>
     </section>
@@ -120,46 +236,31 @@
         </div>
     </section>
 
+    <!-- Store Section -->
     <section class="split-section container" style="padding-top: 0; padding-bottom: 0;">
-        <div class="split-image"
-            style="display: flex; align-items: center; justify-content: center; background-color: #fdf5e6;">
+        <div class="split-image" style="display: flex; align-items: center; justify-content: center; background-color: #fdf5e6;">
             <div style="position: relative; width: 100%; font-size: 0; line-height: 0;">
                 <img id="store-main-image"
-                    src="./images/promo_tich_tem.png"
-                    alt="Hi Mart Nhân Viên"
+                    src="images/himart-store.png"
+                    alt="Hi Mart Cửa Hàng"
                     style="display: block; width: 100%; height: auto; transition: opacity 0.3s;">
-
-                <!-- Main Board Content -->
-                <div id="store-overlay"
-                    style="position: absolute; top: 29%; left: 35%; transform: translate(-50%, -50%) rotate(-6deg); width: 42%; height: auto; text-align: center; pointer-events: none; transition: opacity 0.3s;">
-                    <h2
-                        style="color: #6d3513; font-size: 38px; font-weight: 900; margin: 0; line-height: 1; text-shadow: 2px 2px 0px #fff, -2px -2px 0px #fff, 2px -2px 0px #fff, -2px 2px 0px #fff; letter-spacing: 2px; font-family: 'Nunito', sans-serif;">
-                        HI MART</h2>
-                    <div
-                        style="background-color: #6d3513; color: white; display: inline-block; padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 13px; margin-top: 8px; border: 2px solid white; box-shadow: 2px 2px 0 rgba(0,0,0,0.15); letter-spacing: 0.5px; line-height: 1.2; font-family: 'Nunito', sans-serif;">
-                        Cổ Nhuế • Trần Cung • Đội Cấn
-                    </div>
-                </div>
             </div>
         </div>
         <div class="split-content">
-            <div class="store-header">
-                HỆ THỐNG HI MART
-            </div>
+            <div class="store-header">HỆ THỐNG HI MART</div>
             <div class="store-list-item" data-store="Cổ Nhuế"
                 style="cursor: pointer; transition: background-color 0.3s; background-color: rgba(255,255,255,0.15);">
                 <h4>HI MART CỔ NHUẾ</h4>
-                <p>Liên hệ: 024.1234.5678</p>
+                <p>169 Cổ Nhuế, Bắc Từ Liêm, Hà Nội</p>
             </div>
-            <div class="store-list-item" data-store="Trần Cung"
-                style="cursor: pointer; transition: background-color 0.3s;">
+            <div class="store-list-item" data-store="Trần Cung" style="cursor: pointer; transition: background-color 0.3s;">
                 <h4>HI MART TRẦN CUNG</h4>
-                <p>Liên hệ: 024.8765.4321</p>
+                <p>362 Trần Cung, Bắc Từ Liêm, Hà Nội</p>
             </div>
             <div class="store-list-item" data-store="Đội Cấn"
                 style="cursor: pointer; transition: background-color 0.3s; border-bottom: none;">
                 <h4>HI MART ĐỘI CẤN</h4>
-                <p>Liên hệ: 024.5555.6666</p>
+                <p>204F Đội Cấn, Ba Đình, Hà Nội</p>
             </div>
         </div>
     </section>
@@ -195,87 +296,45 @@
     <section class="promotions container">
         <h2 class="section-title" style="text-align: center;">Chương trình ưu đãi đặc biệt</h2>
         <div class="promo-grid" style="display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 40px;">
+
             <!-- Article 1: Tích Tem -->
-            <div class="promo-article"
-                style="background-color: var(--white); padding: 30px; border-radius: 16px; border: 2px solid rgba(0,0,0,0.05); box-shadow: 0 10px 20px rgba(0,0,0,0.03);">
-                <!-- Promo Art 1 -->
-                <div
-                    style="position: relative; width: 100%; height: 280px; margin-bottom: 20px; text-align: center; overflow: hidden; border-radius: 8px; border: 1px solid #ddd;">
-                    <img src="./images/promo_tich_tem.png"
-                        alt="Tích tem đổi quà" style="width: 100%; height: 100%; object-fit: cover;">
-                    <div
-                        style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); width: 80%; pointer-events: none;">
-                        <h2
-                            style="color: #6d3513; font-size: 32px; font-weight: 900; margin: 0; text-shadow: 2px 2px 0px #fff, -2px -2px 0px #fff, 2px -2px 0px #fff, -2px 2px 0px #fff; transform: rotate(-2deg);">
-                            TÍCH TEM ĐỔI QUÀ</h2>
-                        <div
-                            style="background-color: #f7751c; color: white; display: inline-block; padding: 8px 20px; border-radius: 30px; font-weight: 900; font-size: 18px; margin-top: 10px; transform: rotate(-2deg); box-shadow: 2px 4px 0px rgba(109,53,19,0.5); border: 2px solid #fff;">
-                            Tới 100K Tiền Mặt !</div>
-                    </div>
+            <div class="promo-article" style="background-color: var(--white); padding: 30px; border-radius: 16px; border: 2px solid rgba(0,0,0,0.05); box-shadow: 0 10px 20px rgba(0,0,0,0.03);">
+                <div style="position: relative; width: 100%; height: 280px; margin-bottom: 20px; text-align: center; overflow: hidden; border-radius: 8px; border: 1px solid #ddd;">
+                    <img src="images/promo-tich-tem.png" alt="Tích tem đổi quà" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <h3 style="margin-top: 0; color: var(--green-dark); font-size: 20px; text-transform: uppercase;">TÍCH
-                    TEM ĐỔI QUÀ TẠI ỨNG DỤNG HI MART</h3>
-                <div style="font-size: 13px; color: #888; margin-bottom: 15px; font-style: italic;">Ngày đăng:
-                    03/04/2026</div>
+                <h3 style="margin-top: 0; color: var(--green-dark); font-size: 20px; text-transform: uppercase;">TÍCH TEM ĐỔI QUÀ TẠI ỨNG DỤNG HI MART</h3>
+                <div style="font-size: 13px; color: #888; margin-bottom: 15px; font-style: italic;">Ngày đăng: 03/04/2026</div>
                 <div style="font-size: 15px; line-height: 1.6;">
-                    <p>Từ ngày 06/03 đến ngày 23/04, khách hàng thành viên tham gia có cơ hội nhận E-voucher trị giá tới
-                        100,000 đồng.</p>
-                    <h4
-                        style="color: var(--brown-primary); font-size: 16px; margin: 15px 0 8px 0; text-transform: uppercase;">
-                        1. Đối tượng áp dụng</h4>
+                    <p>Từ ngày 06/03 đến ngày 23/04, khách hàng thành viên tham gia có cơ hội nhận E-voucher trị giá tới 100,000 đồng.</p>
+                    <h4 style="color: var(--brown-primary); font-size: 16px; margin: 15px 0 8px 0; text-transform: uppercase;">1. Đối tượng áp dụng</h4>
                     <p>Khách hàng thành viên tại Ứng dụng Hi Mart.</p>
-                    <h4
-                        style="color: var(--brown-primary); font-size: 16px; margin: 15px 0 8px 0; text-transform: uppercase;">
-                        2. Cách thức tích tem</h4>
+                    <h4 style="color: var(--brown-primary); font-size: 16px; margin: 15px 0 8px 0; text-transform: uppercase;">2. Cách thức tích tem</h4>
                     <ul style="padding-left: 20px; margin: 0 0 15px 0;">
                         <li>Với mỗi hóa đơn từ <strong>100,000 đồng</strong> = 01 Tem.</li>
                         <li><strong>03 Tem</strong> đổi 01 E-voucher trị giá <strong>20,000đ</strong></li>
                         <li><strong>07 Tem</strong> đổi 01 E-voucher trị giá <strong>50,000đ</strong></li>
                         <li><strong>15 Tem</strong> đổi 01 E-voucher trị giá <strong>100,000đ</strong></li>
                     </ul>
-                    <p><em>* Không áp dụng cộng dồn hóa đơn. Khách hàng đưa thẻ thành viên trước khi thu ngân thanh
-                            toán.</em></p>
+                    <p><em>* Không áp dụng cộng dồn hóa đơn. Khách hàng đưa thẻ thành viên trước khi thu ngân thanh toán.</em></p>
                 </div>
             </div>
 
             <!-- Article 2: Giới thiệu bạn bè -->
-            <div class="promo-article"
-                style="background-color: var(--white); padding: 30px; border-radius: 16px; border: 2px solid rgba(0,0,0,0.05); box-shadow: 0 10px 20px rgba(0,0,0,0.03);">
-                <!-- Promo Art 2 -->
-                <div
-                    style="position: relative; width: 100%; height: 280px; margin-bottom: 20px; text-align: center; overflow: hidden; border-radius: 8px; border: 1px solid #ddd;">
-                    <img src="./images/promo_gioi_thieu.png"
-                        alt="Giới thiệu bạn bè" style="width: 100%; height: 100%; object-fit: cover;">
-                    <div
-                        style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); width: 80%; pointer-events: none;">
-                        <h2
-                            style="color: #6d3513; font-size: 30px; font-weight: 900; margin: 0; text-shadow: 2px 2px 0px #fff, -2px -2px 0px #fff, 2px -2px 0px #fff, -2px 2px 0px #fff; transform: rotate(1deg);">
-                            CÙNG NHẬN VOUCHER</h2>
-                        <div
-                            style="background-color: #389823; color: white; display: inline-block; padding: 8px 20px; border-radius: 30px; font-weight: 900; font-size: 18px; margin-top: 10px; transform: rotate(1deg); box-shadow: 2px 4px 0px rgba(109,53,19,0.5); border: 2px solid #fff;">
-                            Thưởng ngay 10K !</div>
-                    </div>
+            <div class="promo-article" style="background-color: var(--white); padding: 30px; border-radius: 16px; border: 2px solid rgba(0,0,0,0.05); box-shadow: 0 10px 20px rgba(0,0,0,0.03);">
+                <div style="position: relative; width: 100%; height: 280px; margin-bottom: 20px; text-align: center; overflow: hidden; border-radius: 8px; border: 1px solid #ddd;">
+                    <img src="images/promo-gioi-thieu.png" alt="Giới thiệu bạn bè" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <h3 style="margin-top: 0; color: var(--green-dark); font-size: 20px; text-transform: uppercase;">GIỚI
-                    THIỆU BẠN BÈ - CÙNG NHẬN VOUCHER</h3>
-                <div style="font-size: 13px; color: #888; margin-bottom: 15px; font-style: italic;">Ngày đăng:
-                    03/04/2026</div>
+                <h3 style="margin-top: 0; color: var(--green-dark); font-size: 20px; text-transform: uppercase;">GIỚI THIỆU BẠN BÈ - CÙNG NHẬN VOUCHER</h3>
+                <div style="font-size: 13px; color: #888; margin-bottom: 15px; font-style: italic;">Ngày đăng: 03/04/2026</div>
                 <div style="font-size: 15px; line-height: 1.6;">
-                    <p>Khách hàng giới thiệu bạn bè đăng ký thẻ thành viên thành công trên Ứng dụng Hi Mart sẽ cùng nhau
-                        nhận ngay quà tặng E-Voucher.</p>
-                    <h4
-                        style="color: var(--brown-primary); font-size: 16px; margin: 15px 0 8px 0; text-transform: uppercase;">
-                        1. Điều kiện nhận thưởng</h4>
+                    <p>Khách hàng giới thiệu bạn bè đăng ký thẻ thành viên thành công trên Ứng dụng Hi Mart sẽ cùng nhau nhận ngay quà tặng E-Voucher.</p>
+                    <h4 style="color: var(--brown-primary); font-size: 16px; margin: 15px 0 8px 0; text-transform: uppercase;">1. Điều kiện nhận thưởng</h4>
                     <ul style="padding-left: 20px; margin: 0 0 15px 0;">
                         <li>Khách hàng mới cần nhập <strong>Mã giới thiệu</strong> của Người giới thiệu.</li>
-                        <li>Khách hàng mới mua sắm với hóa đơn đầu tiên đạt giá trị <strong>150,000 đồng</strong> tại hệ
-                            thống Hi Mart.</li>
+                        <li>Khách hàng mới mua sắm với hóa đơn đầu tiên đạt giá trị <strong>150,000 đồng</strong> tại hệ thống Hi Mart.</li>
                     </ul>
-                    <h4
-                        style="color: var(--brown-primary); font-size: 16px; margin: 15px 0 8px 0; text-transform: uppercase;">
-                        2. Chi tiết quà tặng</h4>
-                    <p>Người giới thiệu và khách hàng mới sẽ nhận được E-Voucher trị giá <strong>10,000đ /
-                            người</strong>.</p>
+                    <h4 style="color: var(--brown-primary); font-size: 16px; margin: 15px 0 8px 0; text-transform: uppercase;">2. Chi tiết quà tặng</h4>
+                    <p>Người giới thiệu và khách hàng mới sẽ nhận được E-Voucher trị giá <strong>10,000đ / người</strong>.</p>
                     <p><em>* E-Voucher sẽ tự động cộng vào Ví Quà Tặng sau 24h. Chỉ nhận 01 lần duy nhất.</em></p>
                 </div>
             </div>
@@ -286,24 +345,226 @@
     <section class="trust-section">
         <div class="container" style="padding: 0;">
             <h2 class="section-title">Hàng xóm của bạn đã chọn Hi Mart!</h2>
-
             <div class="testimonial">
                 "Từ ngày có Hi Mart mở dưới chân chung cư, mình ghé qua sắm đồ sinh hoạt rất tiện lợi, từ bột giặt đến
                 đồ gia dụng đều có đủ, giá lại rẻ hơn siêu thị lớn ở ngoài nữa."<br>
-                <strong style="display: block; margin-top: 10px; color: var(--green-dark);">- Chị Mai (Nhân viên văn
-                    phòng, Quận Bắc Từ Liêm)</strong>
+                <strong style="display: block; margin-top: 10px; color: var(--green-dark);">- Chị Mai (Nhân viên văn phòng, Quận Bắc Từ Liêm)</strong>
             </div>
-
             <div class="testimonial">
-                "Hóa mỹ phẩm ở đây rất đa dạng. Hàng chuẩn chính hãng, nhân viên tư vấn nhiệt tình nên cô mua sắm rất an
-                tâm và thoải mái."<br>
+                "Hóa mỹ phẩm ở đây rất đa dạng. Hàng chuẩn chính hãng, nhân viên tư vấn nhiệt tình nên cô mua sắm rất an tâm và thoải mái."<br>
                 <strong style="display: block; margin-top: 10px; color: var(--green-dark);">- Cô Hoa (Nội Trợ)</strong>
             </div>
-
             <div class="guarantee-box">
                 <h3>CAM KẾT CỦA HI MART</h3>
-                <p style="font-size: 20px; margin-bottom: 0;">Tặng bạn đặc quyền <strong>1 ĐỔI 1</strong> ngay hoặc hoàn
-                    tiền tận tay nếu sản phẩm bị lỗi do nhà sản xuất!</p>
+                <p style="font-size: 20px; margin-bottom: 0;">Tặng bạn đặc quyền <strong>1 ĐỔI 1</strong> ngay hoặc hoàn tiền tận tay nếu sản phẩm bị lỗi do nhà sản xuất!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BẢNG GIÁ THÀNH VIÊN ===== -->
+    <section class="pricing-section container">
+        <h2 class="section-title" style="text-align: center;">Chọn gói thành viên phù hợp với bạn</h2>
+        <p style="text-align: center; font-size: 16px; color: #666; margin-top: -16px; margin-bottom: 40px; font-weight: 600;">
+            Đăng ký một lần — tích lũy ưu đãi cả năm!
+        </p>
+        <div class="pricing-grid">
+            <!-- Gói Bạc -->
+            <div class="pricing-card">
+                <div class="pricing-badge" style="background-color: #b0b8c0; color: #fff;">BẠC</div>
+                <div class="pricing-icon">🪙</div>
+                <h3 class="pricing-name">Thành Viên Bạc</h3>
+                <div class="pricing-price"><span class="price-number">Miễn phí</span></div>
+                <p class="pricing-desc">Dành cho khách hàng mới đăng ký lần đầu trên App Hi Mart.</p>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> Tích điểm mỗi hóa đơn</li>
+                    <li><i class="fa-solid fa-check"></i> Nhận thông báo ưu đãi hàng tuần</li>
+                    <li><i class="fa-solid fa-check"></i> Tham gia chương trình Tích Tem</li>
+                    <li class="disabled"><i class="fa-solid fa-xmark"></i> Giảm thêm 2% trên hóa đơn</li>
+                    <li class="disabled"><i class="fa-solid fa-xmark"></i> Ưu tiên thanh toán quầy VIP</li>
+                    <li class="disabled"><i class="fa-solid fa-xmark"></i> Quà sinh nhật đặc biệt</li>
+                </ul>
+                <a href="#lien-he" class="pricing-cta pricing-cta--outline">Đăng Ký Ngay</a>
+            </div>
+            <!-- Gói Vàng -->
+            <div class="pricing-card pricing-card--featured">
+                <div class="pricing-ribbon">PHỔ BIẾN NHẤT</div>
+                <div class="pricing-badge" style="background-color: #f7b731; color: #6d3513;">VÀNG</div>
+                <div class="pricing-icon">⭐</div>
+                <h3 class="pricing-name">Thành Viên Vàng</h3>
+                <div class="pricing-price">
+                    <span class="price-number">99.000đ</span>
+                    <span class="price-period">/ năm</span>
+                </div>
+                <p class="pricing-desc">Lựa chọn yêu thích của hàng ngàn gia đình Hi Mart trên toàn hệ thống.</p>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> Tích điểm mỗi hóa đơn</li>
+                    <li><i class="fa-solid fa-check"></i> Nhận thông báo ưu đãi hàng tuần</li>
+                    <li><i class="fa-solid fa-check"></i> Tham gia chương trình Tích Tem</li>
+                    <li><i class="fa-solid fa-check"></i> Giảm thêm 2% trên hóa đơn</li>
+                    <li><i class="fa-solid fa-check"></i> Ưu tiên thanh toán quầy VIP</li>
+                    <li class="disabled"><i class="fa-solid fa-xmark"></i> Quà sinh nhật đặc biệt</li>
+                </ul>
+                <a href="#lien-he" class="pricing-cta pricing-cta--primary">Mua Ngay</a>
+            </div>
+            <!-- Gói Kim Cương -->
+            <div class="pricing-card">
+                <div class="pricing-badge" style="background-color: #4a9df8; color: #fff;">KIM CƯƠNG</div>
+                <div class="pricing-icon">💎</div>
+                <h3 class="pricing-name">Thành Viên Kim Cương</h3>
+                <div class="pricing-price">
+                    <span class="price-number">199.000đ</span>
+                    <span class="price-period">/ năm</span>
+                </div>
+                <p class="pricing-desc">Trọn vẹn mọi đặc quyền dành riêng cho những khách hàng thân thiết nhất.</p>
+                <ul class="pricing-features">
+                    <li><i class="fa-solid fa-check"></i> Tích điểm mỗi hóa đơn</li>
+                    <li><i class="fa-solid fa-check"></i> Nhận thông báo ưu đãi hàng tuần</li>
+                    <li><i class="fa-solid fa-check"></i> Tham gia chương trình Tích Tem</li>
+                    <li><i class="fa-solid fa-check"></i> Giảm thêm 5% trên hóa đơn</li>
+                    <li><i class="fa-solid fa-check"></i> Ưu tiên thanh toán quầy VIP</li>
+                    <li><i class="fa-solid fa-check"></i> Quà sinh nhật đặc biệt</li>
+                </ul>
+                <a href="#lien-he" class="pricing-cta pricing-cta--outline">Mua Ngay</a>
+            </div>
+        </div>
+        <div class="pricing-compare-note">
+            <i class="fa-solid fa-circle-info"></i>
+            Thẻ thành viên áp dụng tại tất cả cửa hàng Hi Mart. Ưu đãi giảm giá không áp dụng cùng với các chương trình khuyến mãi khác.
+        </div>
+    </section>
+
+    <!-- Dịch vụ - Tiện ích & Mua sắm Online -->
+    <section class="services-section container">
+        <div class="services-wrapper">
+            <div class="services-box">
+                <h3 class="services-box-title"><i class="fa-solid fa-concierge-bell"></i> DỊCH VỤ - TIỆN ÍCH</h3>
+                <div class="services-grid">
+                    <div class="service-item">
+                        <div class="service-icon"><i class="fa-solid fa-id-card"></i></div>
+                        <p>Phát hành thẻ<br>thành viên Hi Mart</p>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon"><i class="fa-solid fa-credit-card"></i></div>
+                        <p>Phương thức<br>thanh toán</p>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                        <p>Phát hành<br>hoá đơn VAT</p>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon"><i class="fa-solid fa-box-archive"></i></div>
+                        <p>Lưu trữ, hoàn trả đồ<br>khách để quên</p>
+                    </div>
+                </div>
+            </div>
+            <div class="online-shopping-box">
+                <h3 class="services-box-title online-title"><i class="fa-solid fa-cart-shopping"></i> MUA SẮM ONLINE</h3>
+                <div class="online-links">
+                    <a href="#" class="online-link shopee-link">
+                        <span class="online-logo-text" style="color: #EE4D2D; font-weight: 900; font-size: 28px;">🛒 Shopee</span>
+                    </a>
+                    <a href="#" class="online-link grabmart-link">
+                        <span class="online-logo-text" style="color: #00B14F; font-weight: 900; font-size: 28px;">🛵 GrabMart</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tờ rơi khuyến mãi -->
+    <section class="flyer-section container">
+        <h2 class="section-title" style="text-align: center;">Tờ rơi khuyến mãi</h2>
+        <div class="flyer-wrapper">
+            <img src="images/himart-flyer.png" alt="Tờ rơi khuyến mãi Hi Mart" class="flyer-image">
+        </div>
+    </section>
+
+    <!-- ===== FORM LIÊN HỆ ===== -->
+    <section class="contact-section" id="lien-he">
+        <div class="container" style="padding: 0;">
+            <h2 class="section-title" style="text-align: center;">Liên hệ với Hi Mart</h2>
+            <p style="text-align: center; font-size: 16px; color: #fff; margin-top: -16px; margin-bottom: 48px; font-weight: 600; opacity: 0.85;">
+                Góp ý, hợp tác, hay chỉ muốn hỏi thăm — chúng tôi luôn lắng nghe!
+            </p>
+            <div class="contact-wrapper">
+                <!-- Thông tin liên lạc -->
+                <div class="contact-info">
+                    <h4>Thông tin liên lạc</h4>
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon"><i class="fa-solid fa-store"></i></div>
+                        <div>
+                            <strong>Trụ sở chính</strong>
+                            <p>169 Cổ Nhuế, Bắc Từ Liêm, Hà Nội</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <strong>Hotline</strong>
+                            <p>1800 6789 (Miễn phí · 8:00–22:00)</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div>
+                            <strong>Email</strong>
+                            <p>cskh@himart.vn</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon"><i class="fa-brands fa-facebook"></i></div>
+                        <div>
+                            <strong>Fanpage</strong>
+                            <p><a href="https://www.facebook.com/profile.php?id=61563783628786" target="_blank" style="color: #ffe082;">facebook.com/himart</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-hours">
+                        <i class="fa-solid fa-clock"></i> Giờ mở cửa: <strong>6:00 — 22:00</strong> tất cả các ngày trong tuần
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullname">Họ và tên <span class="required">*</span></label>
+                            <input type="text" id="fullname" name="fullname" placeholder="Nguyễn Văn A" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại <span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone" placeholder="0912 345 678" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="example@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Chủ đề <span class="required">*</span></label>
+                        <select id="subject" name="subject" required>
+                            <option value="" disabled selected>— Chọn chủ đề —</option>
+                            <option value="gop-y">Góp ý chất lượng dịch vụ</option>
+                            <option value="khuyen-mai">Hỏi về khuyến mãi / thẻ thành viên</option>
+                            <option value="doi-tra">Yêu cầu đổi / trả hàng</option>
+                            <option value="hop-tac">Hợp tác kinh doanh</option>
+                            <option value="khac">Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Nội dung <span class="required">*</span></label>
+                        <textarea id="message" name="message" rows="5" placeholder="Nhập nội dung bạn muốn gửi đến Hi Mart..." required></textarea>
+                    </div>
+                    <div class="form-group form-checkbox">
+                        <input type="checkbox" id="agree" name="agree" required>
+                        <label for="agree">Tôi đồng ý để Hi Mart liên hệ lại theo thông tin trên.</label>
+                    </div>
+                    <button type="submit" class="form-submit-btn">
+                        <i class="fa-solid fa-paper-plane"></i> Gửi Tin Nhắn
+                    </button>
+                    <div id="form-success" class="form-success-msg" style="display:none;">
+                        <i class="fa-solid fa-circle-check"></i> Cảm ơn bạn! Chúng tôi sẽ liên hệ lại trong vòng 24 giờ.
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -313,8 +574,7 @@
         <div class="footer-inner">
             <div class="footer-col" style="flex: 1.5;">
                 <a href="#" class="logo" style="margin-bottom: 16px;">
-                    <img src="./images/logo.png"
-                        alt="Hi Mart Logo" style="height: 48px; border-radius: 4px;">
+                    <img src="images/7.PNG" alt="Hi Mart Logo" style="height: 48px; border-radius: 4px;">
                 </a>
                 <p style="font-size: 14px; color: #666; max-width: 350px;">
                     <strong style="color: var(--green-dark);">HiMart - Chọn là tin, đến là nhớ</strong><br>
@@ -346,10 +606,8 @@
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
                     <a href="https://www.facebook.com/profile.php?id=61563783628786" target="_blank"
                         style="font-size: 24px; color: var(--green-primary);"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" style="font-size: 24px; color: var(--green-primary);"><i
-                            class="fa-brands fa-youtube"></i></a>
-                    <a href="#" style="font-size: 24px; color: var(--green-primary);"><i
-                            class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" style="font-size: 24px; color: var(--green-primary);"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" style="font-size: 24px; color: var(--green-primary);"><i class="fa-brands fa-tiktok"></i></a>
                 </div>
             </div>
         </div>
@@ -359,41 +617,47 @@
         document.addEventListener('DOMContentLoaded', () => {
             const storeItems = document.querySelectorAll('.store-list-item');
             const mainImage = document.getElementById('store-main-image');
-            const overlayContent = document.getElementById('store-overlay');
 
             const images = {
-                'Cổ Nhuế': './images/promo_tich_tem.png',
-                'Trần Cung': './images/store_tran_cung.jpg',
-                'Đội Cấn': './images/store_doi_can.png'
+                'Cổ Nhuế': 'images/himart-store.png',
+                'Trần Cung': 'images/himart-store.png',
+                'Đội Cấn': 'images/himart-store.png'
             };
 
             storeItems.forEach(item => {
                 item.addEventListener('mouseenter', () => {
                     const storeName = item.getAttribute('data-store');
                     if (!storeName) return;
-
-                    // Fade image out slightly before swap
                     mainImage.style.opacity = 0.6;
                     setTimeout(() => {
                         mainImage.src = images[storeName];
                         mainImage.style.opacity = 1;
                     }, 150);
-
-                    // Hide/Show overlay carefully based on which image represents it best
-                    if (storeName === 'Trần Cung') {
-                        overlayContent.style.opacity = '0';
-                    } else {
-                        // For Cổ Nhuế and Đội Cấn, keeping it visible
-                        overlayContent.style.opacity = '1';
-                    }
-
-                    // Highlight Active
                     storeItems.forEach(si => si.style.backgroundColor = 'transparent');
                     item.style.backgroundColor = 'rgba(255,255,255,0.15)';
                 });
             });
         });
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const form = document.getElementById('contactForm');
+            const btn = form.querySelector('.form-submit-btn');
+            const successMsg = document.getElementById('form-success');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
+            setTimeout(() => {
+                form.reset();
+                btn.style.display = 'none';
+                successMsg.style.display = 'flex';
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Gửi Tin Nhắn';
+                    btn.style.display = 'flex';
+                    successMsg.style.display = 'none';
+                }, 5000);
+            }, 1200);
+        }
     </script>
 </body>
-
 </html>
