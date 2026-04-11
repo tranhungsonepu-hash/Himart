@@ -209,61 +209,61 @@
             <form id="applyForm" onsubmit="handleApply(event)">
                 <div class="form-group">
                     <label>Họ và tên <span class="required">*</span></label>
-                    <input type="text" placeholder="Ví dụ: Nguyễn Văn A" required>
+                    <input type="text" id="fullname" name="entry.fullname" placeholder="Ví dụ: Nguyễn Văn A" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Giới tính <span class="required">*</span></label>
-                        <select required>
+                        <select id="gender" name="entry.gender" required>
                             <option value="">-- Chọn giới tính --</option>
                             <option value="Nam">Nam</option>
-                            <option value="Nu">Nữ</option>
-                            <option value="Khac">Khác</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Ngày tháng năm sinh <span class="required">*</span></label>
-                        <input type="date" required>
+                        <input type="date" id="dob" name="entry.dob" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Số điện thoại liên hệ <span class="required">*</span></label>
-                        <input type="tel" placeholder="09xx xxx xxx" required>
+                        <input type="tel" id="phone" name="entry.phone" placeholder="09xx xxx xxx" required>
                     </div>
                     <div class="form-group">
                         <label>Vị trí ứng tuyển <span class="required">*</span></label>
-                        <select required>
+                        <select id="position" name="entry.position" required>
                             <option value="">-- Chọn vị trí --</option>
-                            <option value="SapXep">Nhân viên Sắp xếp hàng hóa</option>
-                            <option value="TuoiSong">Nam NV Thực phẩm tươi sống</option>
-                            <option value="ThuNgan">Nhân viên Thu Ngân</option>
-                            <option value="GiaoHang">Nhân viên Giao Hàng</option>
-                            <option value="Khac">Vị trí khác</option>
+                            <option value="Sắp xếp hàng hóa">Nhân viên Sắp xếp hàng hóa</option>
+                            <option value="Thực phẩm tươi sống">Nam NV Thực phẩm tươi sống</option>
+                            <option value="Thu Ngân">Nhân viên Thu Ngân</option>
+                            <option value="Giao Hàng">Nhân viên Giao Hàng</option>
+                            <option value="Khác">Vị trí khác</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Địa chỉ hiện tại đang ở <span class="required">*</span></label>
-                    <input type="text" placeholder="Phường, Quận, Thành phố..." required>
+                    <input type="text" id="address" name="entry.address" placeholder="Phường, Quận, Thành phố..." required>
                 </div>
 
                 <div class="form-group">
                     <label>Kinh nghiệm làm việc (Nếu có)</label>
-                    <textarea placeholder="Bạn từng làm việc ở đâu, công việc là gì? (Không bắt buộc nhưng sẽ là điểm cộng)"></textarea>
+                    <textarea id="experience" name="entry.experience" placeholder="Bạn từng làm việc ở đâu, công việc là gì? (Không bắt buộc nhưng sẽ là điểm cộng)"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Bạn biết đến tin tuyển dụng qua đâu?</label>
-                    <select>
-                        <option value="Facebook">Fanpage Facebook</option>
-                        <option value="Website">Website HiMart</option>
-                        <option value="BanBe">Bạn bè giới thiệu</option>
-                        <option value="Zalo">Hội nhóm Zalo</option>
-                        <option value="Khac">Nguồn khác</option>
+                    <select id="source" name="entry.source">
+                        <option value="Fanpage Facebook">Fanpage Facebook</option>
+                        <option value="Website HiMart">Website HiMart</option>
+                        <option value="Bạn bè giới thiệu">Bạn bè giới thiệu</option>
+                        <option value="Hội nhóm Zalo">Hội nhóm Zalo</option>
+                        <option value="Nguồn khác">Nguồn khác</option>
                     </select>
                 </div>
 
@@ -273,27 +273,58 @@
                 <div id="successMsg" class="success-message">
                     <i class="fa-solid fa-circle-check"></i> Đăng ký thành công! HiMart sẽ liên hệ với bạn trong thời gian sớm nhất.
                 </div>
+                <div id="errorMsg" class="success-message" style="display:none; border-color: #ef4444; color: #b91c1c; background: #fef2f2;">
+                    <i class="fa-solid fa-circle-xmark"></i> Có lỗi xảy ra. Hãy thử lại hoặc liên hệ Zalo nhé.
+                </div>
             </form>
         </div>
     </div>
 
     <script>
-        function handleApply(e) {
+        // BƯỚC 2: SAU KHI LÀM GOOGLE SHEET, DÁN LINK WEB APP VÀO ĐÂY NHÉ:
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ9H7ds-cXcvDTXY9yCHDL0F9AQ0J6AP5euQjbPdtU7hs-TZXAK7HK6dg15RVOu106ew/exec';
+
+        async function handleApply(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             const msg = document.getElementById('successMsg');
+            const errMsg = document.getElementById('errorMsg');
             const form = document.getElementById('applyForm');
             
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG GỬI...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG TRUYỀN DỮ LIỆU...';
             btn.style.opacity = '0.8';
             btn.disabled = true;
+            errMsg.style.display = 'none';
 
-            // Giả lập gửi form
-            setTimeout(() => {
+            // Thu thập dữ liệu
+            const formData = new FormData();
+            formData.append('fullname', document.getElementById('fullname').value);
+            formData.append('gender', document.getElementById('gender').value);
+            formData.append('dob', document.getElementById('dob').value);
+            formData.append('phone', document.getElementById('phone').value);
+            formData.append('position', document.getElementById('position').value);
+            formData.append('address', document.getElementById('address').value);
+            formData.append('experience', document.getElementById('experience').value);
+            formData.append('source', document.getElementById('source').value);
+            formData.append('timestamp', new Date().toLocaleString('vi-VN'));
+
+            try {
+                // Gửi dữ liệu thật lên Google Sheets
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors' // Giúp tránh lỗi CORS khi submit form JS
+                });
+
                 form.reset();
                 btn.style.display = 'none';
                 msg.style.display = 'block';
-            }, 1000);
+            } catch (error) {
+                btn.innerHTML = 'CÓ LỖI. VUI LÒNG THỬ LẠI';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+                errMsg.style.display = 'block';
+            }
         }
     </script>
 </body>
