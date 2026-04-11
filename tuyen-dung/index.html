@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HiMart - Ngày Hội Tuyển Dụng</title>
+    <title>HiMart - Ngày Hội Tuyển Dụng & Ứng Tuyển Online</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --himart-green: #00994C;
@@ -25,27 +26,32 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            background-color: #f0f4f8;
+            color: var(--text-main);
+            padding: 40px 20px;
+            line-height: 1.6;
         }
 
-        /* Poster Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* Poster Side */
         .poster {
-            width: 100%;
-            max-width: 800px;
             background: linear-gradient(135deg, var(--himart-green) 0%, var(--himart-dark-green) 100%);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             border-radius: 24px;
             overflow: hidden;
-            position: relative;
+            position: sticky;
+            top: 40px;
             color: #fff;
         }
 
-        /* Decorative Elements */
         .decor-circle {
             position: absolute;
             width: 400px;
@@ -60,289 +66,235 @@
         .poster-content {
             position: relative;
             z-index: 1;
-            padding: 40px;
+            padding: 30px;
         }
 
         /* Header Section */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
+        .header { text-align: center; margin-bottom: 25px; }
         .logo-box {
-            display: inline-block;
-            background: var(--himart-yellow);
-            color: var(--himart-dark-green);
-            font-family: 'Outfit', sans-serif;
-            font-weight: 900;
-            font-size: 36px;
-            padding: 10px 30px;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            letter-spacing: -1px;
+            display: inline-block; background: var(--himart-yellow); color: var(--himart-dark-green);
+            font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 28px;
+            padding: 8px 25px; border-radius: 50px; margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
+        .title-main { font-family: 'Outfit', sans-serif; font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 10px; text-shadow: 2px 2px 0px rgba(0,0,0,0.2); }
+        .subtitle { background: var(--himart-red); display: inline-block; font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; padding: 6px 20px; border-radius: 50px; }
 
-        .title-main {
-            font-family: 'Outfit', sans-serif;
-            font-size: 64px;
-            font-weight: 900;
-            color: #fff;
-            text-transform: uppercase;
-            line-height: 1.1;
-            text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
-            margin-bottom: 10px;
-        }
+        /* Info Cards in Poster */
+        .card { background: #fff; border-radius: 16px; padding: 20px; color: var(--text-main); margin-bottom: 15px; border-left: 6px solid var(--himart-yellow); }
+        .card.highlight { border-left: 6px solid var(--himart-red); background: var(--bg-light); }
+        .card-title { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: var(--himart-dark-green); margin-bottom: 15px; }
+        
+        .job-item { display: flex; align-items: flex-start; margin-bottom: 12px; font-weight: 500; font-size: 15px; }
+        .job-qty { color: var(--himart-red); font-weight: 800; font-family: 'Outfit', sans-serif; font-size: 20px; margin-right: 8px; }
 
-        .subtitle {
-            background: var(--himart-red);
-            display: inline-block;
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            padding: 10px 40px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(225, 28, 36, 0.4);
-            letter-spacing: 1px;
-        }
+        .benefit-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .benefit-item { background: #fff; border: 1px solid #E5E7EB; padding: 10px 15px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+        .benefit-item.salary { background: #FFFBEB; border-color: var(--himart-yellow); color: #D97706; font-size: 18px; }
+        .salary-amount { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; color: var(--himart-red); float: right; }
 
-        /* Main Content Grid */
-        .main-info {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        /* Info Cards */
-        .card {
+        /* Form Side */
+        .form-wrapper {
             background: #fff;
-            border-radius: 20px;
-            padding: 30px;
-            color: var(--text-main);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border-left: 8px solid var(--himart-yellow);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
         }
 
-        .card.highlight {
-            border-left: 8px solid var(--himart-red);
-            background: var(--bg-light);
-        }
+        .form-header { margin-bottom: 30px; }
+        .form-header h2 { font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 800; color: var(--himart-dark-green); margin-bottom: 10px; }
+        .form-header p { color: #666; font-size: 16px; font-weight: 500; }
 
-        .card-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--himart-dark-green);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Job Positions */
-        .job-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            font-size: 18px;
-            line-height: 1.5;
-            font-weight: 500;
-        }
-
-        .job-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .job-icon {
-            font-size: 24px;
-            margin-right: 15px;
-            background: var(--bg-light);
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .form-group { margin-bottom: 20px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        label { display: block; font-weight: 700; margin-bottom: 8px; color: #444; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .required { color: var(--himart-red); }
+        
+        input[type="text"], input[type="tel"], input[type="date"], select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
-            flex-shrink: 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            background: #f8fafc;
+            transition: all 0.2s;
+            outline: none;
         }
 
-        .job-qty {
-            color: var(--himart-red);
-            font-weight: 800;
+        input:focus, select:focus, textarea:focus { border-color: var(--himart-green); background: #fff; box-shadow: 0 0 0 3px rgba(0, 153, 76, 0.1); }
+        textarea { resize: vertical; min-height: 100px; }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--himart-green);
+            color: #fff;
+            border: none;
+            padding: 16px;
             font-family: 'Outfit', sans-serif;
-            font-size: 22px;
-            margin-right: 5px;
+            font-size: 20px;
+            font-weight: 800;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            margin-top: 10px;
         }
-
-        /* Benefits */
-        .benefit-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .benefit-item {
-            background: #fff;
-            border: 2px solid #E5E7EB;
+        
+        .submit-btn:hover { background: var(--himart-dark-green); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 153, 76, 0.2); }
+        
+        .success-message {
+            display: none;
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            color: #047857;
             padding: 15px;
             border-radius: 12px;
+            margin-top: 20px;
             font-weight: 600;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .benefit-item.salary {
-            background: #FFFBEB;
-            border-color: var(--himart-yellow);
-            color: #D97706;
-            grid-column: span 2;
-            font-size: 22px;
-        }
-
-        .salary-amount {
-            font-family: 'Outfit', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--himart-red);
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 40px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 20px;
-            padding: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .contact-info {
-            flex: 1;
-        }
-
-        .contact-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .contact-phone {
-            font-family: 'Outfit', sans-serif;
-            font-size: 48px;
-            font-weight: 900;
-            color: var(--himart-yellow);
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
-        }
-
-        .qr-box {
-            width: 130px;
-            height: 130px;
-            background: #fff;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            color: var(--text-main);
-            font-size: 14px;
-            font-weight: bold;
-            border: 3px solid var(--himart-yellow);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .title-main { font-size: 48px; }
-            .subtitle { font-size: 18px; }
-            .benefit-grid { grid-template-columns: 1fr; }
-            .benefit-item.salary { grid-column: 1; font-size: 18px; }
-            .footer { flex-direction: column; text-align: center; gap: 20px; }
-            .contact-phone { font-size: 36px; }
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .poster { position: relative; top: 0; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="poster">
-        <div class="decor-circle"></div>
-        <div class="decor-circle" style="top: auto; bottom: -150px; left: -150px; width: 500px; height: 500px;"></div>
+    <div class="container">
+        <!-- 1. POSTER SIDE -->
+        <div class="poster">
+            <div class="decor-circle"></div>
+            <div class="poster-content">
+                <div class="header">
+                    <div class="logo-box">HiMART</div>
+                    <h1 class="title-main">NGÀY HỘI<br>VIỆC LÀM 2026</h1>
+                    <div class="subtitle">PHỎNG VẤN TRỰC TIẾP - NHẬN VIỆC NGAY</div>
+                </div>
 
-        <div class="poster-content">
-            <!-- HEADER -->
-            <div class="header">
-                <div class="logo-box">HiMART</div>
-                <h1 class="title-main">NGÀY HỘI<br>VIỆC LÀM 2026</h1>
-                <div class="subtitle">PHỎNG VẤN TRỰC TIẾP - NHẬN VIỆC NGAY</div>
-            </div>
-
-            <!-- MAIN CONTENT -->
-            <div class="main-info">
-                
-                <!-- JOB CARD -->
                 <div class="card">
-                    <h2 class="card-title">🛒 CÁC VỊ TRÍ CẦN TÌM ĐỒNG ĐỘI</h2>
-                    
+                    <h2 class="card-title">🛒 VỊ TRÍ TUYỂN DỤNG</h2>
                     <div class="job-item">
-                        <div class="job-icon">📦</div>
-                        <div>
-                            <span class="job-qty">04</span> 
-                            <span><strong>Nhân viên Sắp xếp & Chăm sóc hàng hoá</strong><br>
-                            <span style="color: #666; font-size: 15px;">Tiếp nhận, bày biện kệ hàng gọn gàng, sạch sẽ. Nhận ca Full-time & Part-time.</span></span>
-                        </div>
+                        <span class="job-qty">04</span> 
+                        <span><strong>Nhân viên Sắp xếp & Chăm sóc hàng hoá</strong><br><span style="color: #666; font-size: 13px;">Tiếp nhận, bày biện kệ hàng gọn gàng.</span></span>
                     </div>
-
                     <div class="job-item">
-                        <div class="job-icon">🥩</div>
-                        <div>
-                            <span class="job-qty">01</span> 
-                            <span><strong>Nam nhân viên Quầy Thực phẩm tươi sống</strong><br>
-                            <span style="color: #666; font-size: 15px;">Bắt đầu ca từ 6h00. Hỗ trợ cắt, lọc, đóng gói quầy thịt/cá. Dưới 40 tuổi.</span></span>
-                        </div>
+                        <span class="job-qty">01</span> 
+                        <span><strong>Nam nhân viên Quầy Tươi sống</strong><br><span style="color: #666; font-size: 13px;">Hỗ trợ cắt, đóng gói quầy thịt/cá. Từ 6h sáng.</span></span>
                     </div>
                 </div>
 
-                <!-- BENEFIT CARD -->
                 <div class="card highlight">
-                    <h2 class="card-title" style="color: var(--himart-red);">🎁 ĐẶC QUYỀN GIA NHẬP</h2>
-                    
+                    <h2 class="card-title" style="color: var(--himart-red);">🎁 QUYỀN LỢI ĐẶC QUYỀN</h2>
                     <div class="benefit-grid">
-                        <div class="benefit-item salary">
-                            ✨ Thu nhập khởi điểm: <span class="salary-amount" style="margin-left:auto;">25k - 30k/h</span>
-                        </div>
-                        <div class="benefit-item">
-                            ✅ Không nợ lương, thưởng cực sòng phẳng
-                        </div>
-                        <div class="benefit-item">
-                            ✅ Đóng Bảo hiểm khi gắn bó lâu dài
-                        </div>
+                        <div class="benefit-item salary">Thu nhập khởi điểm: <span class="salary-amount">25k - 30k/h</span></div>
+                        <div class="benefit-item">✅ Trả lương đúng hẹn, thưởng doanh thu cực hậu</div>
+                        <div class="benefit-item">✅ Đóng bảo hiểm đầy đủ khi gắn bó lâu dài</div>
                     </div>
                 </div>
-                
+            </div>
+        </div>
+
+        <!-- 2. APPLICATION FORM SIDE -->
+        <div class="form-wrapper">
+            <div class="form-header">
+                <h2>Cơ Hội Việc Làm Liền Tay!</h2>
+                <p>Điền thông tin ứng tuyển trực tuyến. Bộ phận nhân sự sẽ liên hệ gọi bạn đi phỏng vấn trong vòng 24h.</p>
             </div>
 
-            <!-- FOOTER -->
-            <div class="footer">
-                <div class="contact-info">
-                    <div class="contact-title">GỌI NGAY CHO NHÂN SỰ:</div>
-                    <div class="contact-phone">0867.269.598</div>
-                    <p style="margin-top: 10px; font-size: 16px; opacity: 0.9;">Hoặc tới trực tiếp: Cửa hàng HiMart gần nhất</p>
+            <form id="applyForm" onsubmit="handleApply(event)">
+                <div class="form-group">
+                    <label>Họ và tên <span class="required">*</span></label>
+                    <input type="text" placeholder="Ví dụ: Nguyễn Văn A" required>
                 </div>
-                <div class="qr-box">
-                    <span>[Mã QR<br>Ứng Tuyển<br>Zalo]</span>
-                </div>
-            </div>
 
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Giới tính <span class="required">*</span></label>
+                        <select required>
+                            <option value="">-- Chọn giới tính --</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nu">Nữ</option>
+                            <option value="Khac">Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày tháng năm sinh <span class="required">*</span></label>
+                        <input type="date" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Số điện thoại liên hệ <span class="required">*</span></label>
+                        <input type="tel" placeholder="09xx xxx xxx" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Vị trí ứng tuyển <span class="required">*</span></label>
+                        <select required>
+                            <option value="">-- Chọn vị trí --</option>
+                            <option value="SapXep">Nhân viên Sắp xếp hàng hóa</option>
+                            <option value="TuoiSong">Nam NV Thực phẩm tươi sống</option>
+                            <option value="ThuNgan">Nhân viên Thu Ngân</option>
+                            <option value="GiaoHang">Nhân viên Giao Hàng</option>
+                            <option value="Khac">Vị trí khác</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Địa chỉ hiện tại đang ở <span class="required">*</span></label>
+                    <input type="text" placeholder="Phường, Quận, Thành phố..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Kinh nghiệm làm việc (Nếu có)</label>
+                    <textarea placeholder="Bạn từng làm việc ở đâu, công việc là gì? (Không bắt buộc nhưng sẽ là điểm cộng)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Bạn biết đến tin tuyển dụng qua đâu?</label>
+                    <select>
+                        <option value="Facebook">Fanpage Facebook</option>
+                        <option value="Website">Website HiMart</option>
+                        <option value="BanBe">Bạn bè giới thiệu</option>
+                        <option value="Zalo">Hội nhóm Zalo</option>
+                        <option value="Khac">Nguồn khác</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    NỘP HỒ SƠ ỨNG TUYỂN
+                </button>
+                <div id="successMsg" class="success-message">
+                    <i class="fa-solid fa-circle-check"></i> Đăng ký thành công! HiMart sẽ liên hệ với bạn trong thời gian sớm nhất.
+                </div>
+            </form>
         </div>
     </div>
 
+    <script>
+        function handleApply(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('successMsg');
+            const form = document.getElementById('applyForm');
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ĐANG GỬI...';
+            btn.style.opacity = '0.8';
+            btn.disabled = true;
+
+            // Giả lập gửi form
+            setTimeout(() => {
+                form.reset();
+                btn.style.display = 'none';
+                msg.style.display = 'block';
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
