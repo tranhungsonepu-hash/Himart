@@ -157,9 +157,18 @@
         }
 
         @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
-            .poster { position: relative; top: 0; }
-            .form-row { grid-template-columns: 1fr; gap: 0; }
+            body { padding: 20px 12px; }
+            .container { grid-template-columns: 1fr; gap: 20px; }
+            .poster-image-container { position: static; border-radius: 16px; }
+            .form-wrapper { padding: 24px 16px; border-radius: 16px; }
+            .form-header h2 { font-size: 26px; }
+        }
+
+        @media (max-width: 480px) {
+            .form-header h2 { font-size: 22px; }
+            .submit-btn { font-size: 18px; padding: 14px; }
+            label { font-size: 12px; }
+            input, select, textarea { font-size: 14px; padding: 10px 14px; }
         }
     </style>
 </head>
